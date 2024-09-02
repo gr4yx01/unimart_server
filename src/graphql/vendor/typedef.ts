@@ -3,10 +3,11 @@ export const VendorTypeDef = `
         name: String
         verified: Boolean
         phone_no: String
+        image: String
         rating: Int
     }
 
     type Mutation {
-        createVendor(name: String!, verified: Boolean!, phone_no: String!): Vendor
+        createVendor(name: String!, verified: Boolean!, image: String!, phone_no: String!, rating: Int!): Vendor
     }
 `;

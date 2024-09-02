@@ -19,9 +19,20 @@ model University {
   name String
 }
 
+enum Category {
+  BOOK
+  FOOD
+  PHONE
+  LAPTOP
+  PERFUME
+  CLOTHING
+  ROOM_ITEMS
+}
+
 model User {
   id String @id @default(cuid())
   name String
+  email String @unique
   department String?
   university University @relation(fields: [universityId], references: [id])
   level String?
@@ -33,6 +44,7 @@ model User {
 model Vendor {
   id String @id @default(cuid())
   name String
+  image String
   verified Boolean?
   phone_no String?
   rating Int?
@@ -48,7 +60,8 @@ model Product {
   vendor Vendor @relation(fields: [vendorId], references: [id])
   orders OrderItem[]
   vendorId String
-  rating String?
+  rating Int?
+  category Category
 }
 
 model Order {
@@ -58,9 +71,9 @@ model Order {
   items OrderItem[]
   status String
   total_price Int
-  delivery_date DateTime
-  delivery_time String
-  payment_status String
+  createdAt DateTime @default(now())
+  payment_status String?
+  payment_reference String
 }
 
 model OrderItem {

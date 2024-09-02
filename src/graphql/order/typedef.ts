@@ -1,15 +1,33 @@
 export const OrderTypeDef = `
     type Order {
         items: [OrderItem]
+        user: User
         status: String
         total_price: Int
-        delivery_date: String
-        delivery_time: String
+        created_at: String
         payment_status: String
     }
 
-    type Mutation {
-        createOrder(items: [OrderItemInput], delivery_date: String, delivery_time: String): Order
+    input Items {
+        product_id: ID!
+        quantity: Int!
     }
 
-`
+    input OrderInput {
+        items: [Items!]!
+        userId: String!
+        status: String!
+        total_price: Int!
+        payment_status: String!
+        payment_reference: String!
+    }
+
+    type Query {
+        orders(userId: String!): [Order]
+    }
+
+    type Mutation {
+        createOrder(input: OrderInput!): Order
+    }
+
+`;

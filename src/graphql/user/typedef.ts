@@ -1,6 +1,7 @@
 export const UserTypeDef = `
     type User {
         name: String
+        email: String
         department: String
         university: University
         level: String
@@ -9,10 +10,10 @@ export const UserTypeDef = `
     }
     
     type Query {
-        user(name: String!): User
+        user(id: String!): User
     }
     
     type Mutation {
-        createUser(name: String!, department: String!, university: String, level: String, phone_no: String): User
+        createUser(name: String!, email: String!, department: String!, universityId: String!, level: String!, phone_no: String!): User
     }
 `

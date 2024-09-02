@@ -1,9 +1,14 @@
-export const resolver = {
+export const UniversityResolver = {
     Mutation: {
-        async createUniversity() {
-            return {
-                msg: 'create university' 
-            }
+        async createUniversity(_: any, args: any, { prisma }: any) {
+            const { name } = args;
+
+            const university = await prisma.university.create({
+                data: {
+                    name
+                }
+            })
+            return university
         },
     },
-}
+}  
