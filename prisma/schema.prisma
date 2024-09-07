@@ -44,11 +44,16 @@ model User {
 model Vendor {
   id String @id @default(cuid())
   name String
+  email String @unique
   image String
   verified Boolean?
   phone_no String?
   rating Int?
+  subaccount_code String?
+  account_number String
+  bank_code String
   products Product[]
+  orders Order[]
 }
 
 model Product {
@@ -74,6 +79,8 @@ model Order {
   createdAt DateTime @default(now())
   payment_status String?
   payment_reference String
+  vendor Vendor? @relation(fields: [vendorId], references: [id])
+  vendorId String?
 }
 
 model OrderItem {

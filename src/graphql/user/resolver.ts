@@ -32,6 +32,19 @@ export const UserResolver = {
         });
 
         return user;
+      },
+      updateUser: async (_: any, args: any, { prisma }: any) => {
+        const { id, ...detail } = args;
+        const user = await prisma.user.update({
+          where: {
+            id
+          },
+          data: {
+            ...detail
+          }
+        });
+
+        return user
       }
     }
 }

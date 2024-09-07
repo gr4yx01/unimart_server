@@ -29,9 +29,20 @@ export const PaymentTypeDef = `
         quantity: Int
     }
 
-    type Mutation {
-        createPaymentSession(email: String!, amount: Int!): PaymentInitialization
-        verifyPayment(reference: String!): PaymentVerification
+    type SubaccountData {
+        business_name: String
+        account_number: String
+        bank_code: String
+        percentage_charge: Float
     }
-    
+
+    type SubaccountResponse {
+        subaccount_code: String
+    }
+
+    type Mutation {
+        createPaymentSession(email: String!, amount: Int!, subaccount_code: String!): PaymentInitialization
+        verifyPayment(reference: String!): PaymentVerification
+        createSubaccount(business_name: String!, account_number: String!, bank_code: String!, percentage_charge: Float!): SubaccountResponse
+    }
 `;

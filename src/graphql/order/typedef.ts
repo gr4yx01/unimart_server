@@ -6,6 +6,7 @@ export const OrderTypeDef = `
         total_price: Int
         created_at: String
         payment_status: String
+        payment_reference: String
     }
 
     input Items {

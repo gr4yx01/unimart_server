@@ -15,5 +15,6 @@ export const UserTypeDef = `
     
     type Mutation {
         createUser(name: String!, email: String!, department: String!, universityId: String!, level: String!, phone_no: String!): User
+        updateUser(id : ID!, name: String!, email: String!, department: String!, level: String!, phone_no: String!): User
     }
 `
