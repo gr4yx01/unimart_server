@@ -4,6 +4,9 @@ import { ApolloServer } from '@apollo/server';
 import  { schema } from './graphql/schema';
 import { expressMiddleware } from '@apollo/server/express4';
 import {  PrismaClient } from '@prisma/client';
+import cloudinary from './utils/cloudinary';
+
+
 
 const app = express();
 
@@ -17,11 +20,12 @@ const startServer = async () => {
     app.use(
         '/graphql',
         cors(),
-        express.json(),
+        express.json({ limit: '50mb' }),
         expressMiddleware(server, {
             context: async ({ req }) => {
                 return {
-                    prisma
+                    prisma,
+                    cloudinary
                 }
             }
         }),
