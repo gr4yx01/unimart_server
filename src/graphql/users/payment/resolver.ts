@@ -1,4 +1,4 @@
-import { createSubaccount, initializePayment, verifyPayment } from "../../payment-service";
+import { createSubaccount, initializePayment, verifyPayment } from "../../../payment-service";
 
 export const PaymentResolver = {
   Mutation: {

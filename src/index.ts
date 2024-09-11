@@ -4,11 +4,18 @@ import { ApolloServer } from '@apollo/server';
 import  { schema } from './graphql/schema';
 import { expressMiddleware } from '@apollo/server/express4';
 import {  PrismaClient } from '@prisma/client';
-import cloudinary from './utils/cloudinary';
+import dotenv from 'dotenv'
+import { v2 as cloudinary } from 'cloudinary';
 
-
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, // replace with your cloud name
+  api_key: process.env.CLOUDINARY_API_KEY,      // replace with your api key
+  api_secret: process.env.CLOUDINARY_API_SECRET // replace with your api secret
+});
 
 const app = express();
+
+dotenv.config();
 
 const prisma = new PrismaClient();
 
@@ -20,7 +27,7 @@ const startServer = async () => {
     app.use(
         '/graphql',
         cors(),
-        express.json({ limit: '50mb' }),
+        express.json({ limit: '100mb' }),
         expressMiddleware(server, {
             context: async ({ req }) => {
                 return {
