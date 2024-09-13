@@ -15,8 +15,8 @@ export const VendorOrderTypeDef = `
     }
 
     type NumberOfOrders {
-        label: String;
-        quantity: Number;
+        label: String
+        quantity: Int
     }
 
     input OrderInput {

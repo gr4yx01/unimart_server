@@ -14,9 +14,9 @@ datasource db {
 }
 
 model University {
-  id String @id @default(cuid())
+  id    String @id @default(cuid())
   users User[]
-  name String
+  name  String
 }
 
 enum Category {
@@ -36,66 +36,65 @@ enum Status {
 }
 
 model User {
-  id String @id @default(cuid())
-  name String
-  email String @unique
-  department String?
-  university University @relation(fields: [universityId], references: [id])
-  level String?
+  id           String     @id @default(cuid())
+  name         String
+  email        String     @unique
+  department   String?
+  university   University @relation(fields: [universityId], references: [id])
+  level        String?
   universityId String
-  phone_no String? 
-  orders Order[]
+  phone_no     String?
+  orders       Order[]
 }
 
 model Vendor {
-  id String @id @default(cuid())
-  name String
-  email String @unique
-  image String
-  verified Boolean?
-  phone_no String?
-  rating Int?
+  id              String      @id @default(cuid())
+  name            String
+  email           String      @unique
+  image           String
+  verified        Boolean?
+  phone_no        String?
+  rating          Int?
   subaccount_code String?
-  account_number String
-  bank_code String
-  products Product[]
-  orders OrderItem[]
+  account_number  String
+  bank_code       String
+  products        Product[]
+  orders          OrderItem[]
 }
 
 model Product {
-  id String @id @default(cuid())
-  name String
-  price Int
+  id          String      @id @default(cuid())
+  name        String
   description String?
-  image String
-  vendor Vendor @relation(fields: [vendorId], references: [id])
-  orders OrderItem[]
-  vendorId String
-  rating Int?
-  category Category
+  price       Float
+  stock       Int
+  vendor      Vendor      @relation(fields: [vendorId], references: [id])
+  vendorId    String
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  orderItems  OrderItem[] // Relation with Order Items
 }
 
 model Order {
-  id String @id @default(cuid())
-  user User @relation(fields: [userId], references: [id])
-  userId String
-  items OrderItem[]
-  status Status
-  total_price Int
-  createdAt DateTime @default(now())
-  payment_status String?
+  id                String      @id @default(cuid())
+  user              User        @relation(fields: [userId], references: [id])
+  userId            String
+  items             OrderItem[]
+  status            Status
+  total_price       Int
+  createdAt         DateTime    @default(now())
+  payment_status    String?
   payment_reference String
-  
 }
 
 model OrderItem {
-  id        String   @id @default(cuid())
-  order     Order    @relation(fields: [orderId], references: [id])
+  id        String  @id @default(cuid())
+  order     Order   @relation(fields: [orderId], references: [id])
   orderId   String
-  product   Product  @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
   productId String
   quantity  Int
-  vendor Vendor? @relation(fields: [vendorId], references: [id])
-  vendorId String?
-  status Status
+  vendor    Vendor? @relation(fields: [vendorId], references: [id])
+  vendorId  String?
+  status    Status
 }

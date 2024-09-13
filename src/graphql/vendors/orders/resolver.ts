@@ -39,6 +39,11 @@ export const VendorOrderResolver = {
                     }
                 }
             })
+
+            return {
+                label: 'Pending Orders',
+                quantity: orders.length || 0
+            };
         },
         getNumberOfCompletedOrders(_: any, args: any, { prisma }: any) {
             const { vendorId } = args;
@@ -52,6 +57,11 @@ export const VendorOrderResolver = {
                     }
                 }
             })
+
+            return {
+                label: 'Pending Orders',
+                quantity: orders.length || 0
+            };
         }
     }
 };
