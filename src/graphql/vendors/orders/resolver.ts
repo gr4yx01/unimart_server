@@ -1,67 +1,57 @@
-export const VendorOrderResolver = {
-    Query: {
-        async getPendingOrders(_: any, args: any, { prisma }: any) {
-            const { vendorId } = args;
+    export const VendorOrderResolver = {
+        Query: {
+            async getPendingOrders(_: any, args: any, { prisma }: any) {
+                const { vendorId } = args;
 
-            const orders = await prisma.order.findMany({
-                where: {
-                    status: 'PENDING',
-                    items: {
-                        some: {
-                            vendorId
+                const orders = await prisma.order.findMany({
+                    where: {
+                        status: 'PENDING',
+                        items: {
+                            some: {
+                                vendorId
+                            }
+                        }
+                    },
+                    include: {
+                        items: {
+                            where: {
+                                vendorId
+                            },
+                            include: {
+                                product: true
+                            }
                         }
                     }
-                },
-                include: {
-                    items: {
-                        where: {
-                            vendorId
-                        },
-                        include: {
-                            product: true
-                        }
-                    }
-                }
-            })
+                })
 
-            return orders;
+                return orders;
+            }
         },
-        getNumberOfPendingOrders(_: any, args: any, { prisma }: any) {
-            const { vendorId } = args;
+        Mutation: {
+            async updateOrderStatus(_: any, args: any, { prisma }: any) {
+                const { id, status } = args;
 
-            const orders = prisma.order.findMany({
-                where: {
-                    status: 'PENDING',
-                    items: {
-                        some: {
-                            vendorId
-                        }
+                const orderExist = await prisma.order.findUnique({
+                    where: {
+                        id,
                     }
-                }
-            })
+                })
 
-            return {
-                label: 'Pending Orders',
-                quantity: orders.length || 0
-            };
-        },
-        getNumberOfCompletedOrders(_: any, args: any, { prisma }: any) {
-            const { vendorId } = args;
-            const orders = prisma.order.findMany({
-                where: {
-                    status: 'COMPLETED',
-                    items: {
-                        some: {
-                            vendorId
-                        }
+                if(!orderExist) {
+                    throw new Error('Order does not exist')
+                }
+
+                const order = await prisma.order.update({
+                    where: {
+                        id: orderExist.id
+                    },
+                    data: {
+                        ...orderExist,
+                        status
                     }
-                }
-            })
+                })
 
-            return {
-                label: 'Pending Orders',
-                quantity: orders.length || 0
-            };
+                return order;
+            }
         }
-    }
-};
+    };

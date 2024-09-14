@@ -59,15 +59,17 @@ model Vendor {
   account_number  String
   bank_code       String
   products        Product[]
-  orders          OrderItem[]
 }
 
 model Product {
   id          String      @id @default(cuid())
   name        String
-  description String?
+  description String
   price       Float
+  rating      Int
+  thumbnail   String
   stock       Int
+  category    Category
   vendor      Vendor      @relation(fields: [vendorId], references: [id])
   vendorId    String
   createdAt   DateTime    @default(now())
@@ -83,6 +85,7 @@ model Order {
   status            Status
   total_price       Int
   createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
   payment_status    String?
   payment_reference String
 }
@@ -94,7 +97,4 @@ model OrderItem {
   product   Product @relation(fields: [productId], references: [id])
   productId String
   quantity  Int
-  vendor    Vendor? @relation(fields: [vendorId], references: [id])
-  vendorId  String?
-  status    Status
 }

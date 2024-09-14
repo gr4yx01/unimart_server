@@ -14,21 +14,17 @@ export const OrderTypeDef = `
         quantity: Int!
     }
 
-    input OrderInput {
-        items: [Items!]!
-        userId: String!
-        status: String!
-        total_price: Int!
-        payment_status: String!
-        payment_reference: String!
-    }
-
     type Query {
         orders(userId: String!): [Order]
     }
 
     type Mutation {
-        createOrder(input: OrderInput!): Order
+        createOrder(items: [Items!]!
+        userId: String!
+        status: String!
+        total_price: Int!
+        payment_status: String!
+        payment_reference: String!): Order
     }
 
 `;

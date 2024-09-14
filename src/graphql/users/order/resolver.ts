@@ -21,9 +21,8 @@ export const OrderResolver = {
     },
     Mutation: {
         async createOrder(_: any, args: any, { prisma }: any) {
-            const { items, userId, status, total_price, payment_status, payment_reference } = args.input;
+            const { items, userId, status, total_price, payment_status, payment_reference } = args;
 
-            console.log(args.input);
             const order = await prisma.order.create({
                 data: {
                     userId,

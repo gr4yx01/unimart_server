@@ -1,5 +1,13 @@
-[x] -Setup Prisma
-[x] -Connect to docker postgreSQL
-[x] -Write schema
-[ ] -Implement GraphQL mutations and resolvers
-[ ] -Setup payment gateway with paystack
+- [x] Setup Prisma
+- [x] Connect to docker postgreSQL
+- [x] Write schema
+- [ ] Implement GraphQL mutations and resolvers
+    - [ ] Get vendors orders
+    - [x] Create product
+    - [x] Get vendors products
+    - [x] Edit product
+    - [x] Delete product
+    - [ ] Edit profile
+    
+- [ ] Setup payment gateway with paystack
+    - [ ] payment to vendors

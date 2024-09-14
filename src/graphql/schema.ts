@@ -1,7 +1,7 @@
 import { mergeTypeDefs, mergeResolvers } from "@graphql-tools/merge";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { OrderTypeDef } from "./users/order/typedef";
-import { ProductTypeDef } from "./users/product/typedef";
+import { ProductTypeDef } from "./vendors/product/typedef";
 import { VendorTypeDef } from "./vendors/vendor/typedef";
 import { UniversityTypeDef } from "./university/typedef";
 import { UserTypeDef } from "./users/user/typedef";
@@ -11,7 +11,7 @@ import { VendorOrderTypeDef } from "./vendors/orders/typedef";
 import { PaymentResolver  } from "./users/payment/resolver";
 import { OrderItemResolver } from "./users/orderitem/resolver";
 import { OrderResolver } from "./users/order/resolver";
-import { ProductResolver } from "./users/product/resolver";
+import { ProductResolver } from "./vendors/product/resolver";
 import { VendorResolver } from "./vendors/vendor/resolver";
 import { UniversityResolver } from "./university/resolver";
 import { UserResolver } from "./users/user/resolver";

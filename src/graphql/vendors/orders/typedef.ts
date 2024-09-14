@@ -30,7 +30,9 @@ export const VendorOrderTypeDef = `
 
     type Query {
         getPendingOrders(vendorId: String!): [Order]
-        getNumberOfPendingOrders(vendorId: String!): NumberOfOrders
-        getNumberOfCompletedOrders(vendorId: String!): NumberOfOrders
+    }
+        
+    type Mutation {
+        updateOrderStatus(id: String!, status: String!): Order
     }
 `;
