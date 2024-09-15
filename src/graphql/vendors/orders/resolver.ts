@@ -3,23 +3,19 @@
             async vendorOrders(_: any, args: any, { prisma }: any) {
                 const { vendorId } = args;
 
-                const orders = await prisma.order.findMany({
+                const orders = await prisma.orderItem.findMany({
                     where: {
-                        items: {
-                            some: {
-                                vendorId
-                            }
+                        product: {
+                            vendorId
                         }
                     },
                     include: {
-                        items: {
-                            where: {
-                                vendorId
-                            },
+                        product: true,
+                        order: {
                             include: {
-                                product: true
+                                user: true
                             }
-                        }
+                        },
                     }
                 })
 

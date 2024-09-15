@@ -9,6 +9,12 @@ export const VendorOrderTypeDef = `
         payment_reference: String
     }
 
+    type OrderItem {
+        quantity: Int
+        product: Product
+        order: Order
+    }
+
     input Items {
         product_id: ID!
         quantity: Int!
@@ -29,7 +35,7 @@ export const VendorOrderTypeDef = `
     }
 
     type Query {
-        vendorOrders(vendorId: String!): [Order]
+        vendorOrders(vendorId: String!): [OrderItem]
     }
         
     type Mutation {
