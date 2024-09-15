@@ -6,6 +6,7 @@ import { expressMiddleware } from '@apollo/server/express4';
 import {  PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv'
 import { v2 as cloudinary } from 'cloudinary';
+import { handleWebhook } from './webhook'
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME, // replace with your cloud name
@@ -17,7 +18,7 @@ const app = express();
 
 dotenv.config();
 
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient();
 
 const startServer = async () => {
     const server = new ApolloServer({
@@ -37,6 +38,8 @@ const startServer = async () => {
             }
         }),
     );
+
+    app.post('/webhook', handleWebhook);
     app.listen('4000', () => {
         console.log("Server's up");
     })

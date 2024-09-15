@@ -1,11 +1,10 @@
     export const VendorOrderResolver = {
         Query: {
-            async getPendingOrders(_: any, args: any, { prisma }: any) {
+            async vendorOrders(_: any, args: any, { prisma }: any) {
                 const { vendorId } = args;
 
                 const orders = await prisma.order.findMany({
                     where: {
-                        status: 'PENDING',
                         items: {
                             some: {
                                 vendorId

@@ -35,6 +35,11 @@ enum Status {
   CANCELLED
 }
 
+enum Subscription {
+  ACTIVE
+  INACTIVE
+}
+
 model User {
   id           String     @id @default(cuid())
   name         String
@@ -59,6 +64,8 @@ model Vendor {
   account_number  String
   bank_code       String
   products        Product[]
+  subscriptionStatus    Subscription @default(INACTIVE)
+  subscriptionCode String @unique @default("SUB_r5oqy8oo3onjx8z")
 }
 
 model Product {

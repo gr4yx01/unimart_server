@@ -12,6 +12,8 @@ export const VendorTypeDef = `
         bank_code: String
         total_orders: Int
         revenue: Int
+        subscriptionStatus: String
+        subscriptionCode: String
     }
 
     type Query {
@@ -19,7 +21,7 @@ export const VendorTypeDef = `
     }
 
     type Mutation {
-        createVendor(name: String!, verified: Boolean!, image: String!, phone_no: String!, rating: Int!, email: String!, account_number: String!, bank_code: String!, subaccount_code: String!): Vendor
+        createVendor(name: String!, verified: Boolean!, image: String!, phone_no: String!, rating: Int!, email: String!, account_number: String!, bank_code: String!, subaccount_code: String!, subscriptionStatus: String!, subscriptionCode: String!): Vendor
         updateProfile(id: String, name: String, image: String, phone_no: String, email: String, account_number: String, bank_code: String ): Vendor
     }
 `;

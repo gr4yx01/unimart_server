@@ -29,7 +29,7 @@ export const VendorOrderTypeDef = `
     }
 
     type Query {
-        getPendingOrders(vendorId: String!): [Order]
+        vendorOrders(vendorId: String!): [Order]
     }
         
     type Mutation {

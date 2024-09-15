@@ -64,10 +64,40 @@ const createSubaccount = async (business_name: string, account_number: string, b
     throw error;
   }
 };
+const createPlan = async (name: string, interval: string, amount: string) => {
+  return instance.post('/plan', {
+    name,
+    interval,
+    amount,
+  });
+};
+
+const createCustomer = async (email: string) => {
+  return instance.post('/customer', { email });
+};
+
+const subscribeCustomer = async (customer_code: string, plan_code: string) => {
+  return instance.post('/subscription', {
+    customer: customer_code,
+    plan: plan_code,
+  });
+};
+
+const unsubscribeCustomer = async (subscription_code: string, email_token: string) => {
+  console.log(subscription_code, email_token);
+  return instance.post('/subscription/disable', {
+    code: subscription_code,
+    token: email_token,
+  });
+};
 
 
 export {
   initializePayment,
   verifyPayment,
-  createSubaccount
+  createSubaccount,
+  createPlan,
+  createCustomer,
+  subscribeCustomer,
+  unsubscribeCustomer
 };
