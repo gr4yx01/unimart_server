@@ -1,5 +1,6 @@
 export const ProductTypeDef = `
     type Product {
+        id: String
         name: String
         price: Int
         description: String

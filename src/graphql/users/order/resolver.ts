@@ -37,11 +37,18 @@ export const OrderResolver = {
             })
 
             items.forEach(async (item: any) => {
+                const product = await prisma.product.findUnique({
+                    where: {
+                        id: item.product_id
+                    }
+                })
+
                 await prisma.orderItem.create({
                     data: {
                         orderId: order.id,
                         productId: item.product_id,
-                        quantity: item.quantity
+                        quantity: item.quantity,
+                        amount: item?.quantity * product?.price
                     }
                 })
             })

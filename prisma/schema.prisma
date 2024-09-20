@@ -65,7 +65,7 @@ model Vendor {
   bank_code       String
   products        Product[]
   subscriptionStatus    Subscription @default(INACTIVE)
-  subscriptionCode String @unique @default("SUB_r5oqy8oo3onjx8z")
+  subscriptionCode String? @unique
 }
 
 model Product {
@@ -93,7 +93,7 @@ model Order {
   total_price       Int
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
-  payment_status    String?
+  payment_status    Boolean?
   payment_reference String
 }
 
@@ -103,5 +103,7 @@ model OrderItem {
   orderId   String
   product   Product @relation(fields: [productId], references: [id])
   productId String
+  amount Int
   quantity  Int
+  status  Status  @default(PENDING)
 }

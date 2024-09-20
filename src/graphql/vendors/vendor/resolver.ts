@@ -1,38 +1,74 @@
-import { Order } from "@prisma/client"
+import { OrderItem } from "@prisma/client"
 
 export const VendorResolver = {
     Vendor: {
         total_orders: async (parent: any, _: any, { prisma }: any) => {
-            const totalOrders = await prisma.order.count({
+            console.log(parent.id);
+            const totalOrders = await prisma.orderItem.findMany({
                 where: {
-                    vendorId: parent.id
+                  product: {
+                    vendorId: parent.id // Correct nested filtering based on vendorId in the Product model
+                  }
                 }
-            })
+              });
 
-            return totalOrders
+            return totalOrders?.length
         },
         revenue: async (parent: any, _: any, { prisma }: any) => {
-            const orders = await prisma.order.findMany({
+            const orders = await prisma.orderItem.findMany({
                 where: {
-                    vendorId: parent.id
+                    product: {
+                        vendorId: parent.id
+                    }
                 }
             })
 
-            const revenue = orders.reduce((acc: number, order: Order) => {
-                return acc + order.total_price
-            }, 0)
+            const calculateRevenue = async (orders: OrderItem[]) => {
+                const revenuePromises = orders.map(async (order: OrderItem) => {
+                  const product = await prisma.product.findUnique({
+                    where: { id: order.productId }
+                  });
+              
+                  if (product) {
+                    return order.quantity * order.amount;
+                  }
+              
+                  return 0; // In case the product is not found
+                });
+                // Resolve all the promises and sum up the revenue
+                const revenueArray = await Promise.all(revenuePromises);
+                const totalRevenue = revenueArray.reduce((acc: number, revenue: number) => acc + revenue, 0);
+              
+                console.log(totalRevenue);
+                return totalRevenue;
+              };
 
-            return revenue
+            return calculateRevenue(orders)
         }
     },
     Query: {
+        async getVendorIdByEmail(_: any, args: any, { prisma }: any) {
+            try {
+                const { email } = args;
+    
+                const vendor = await prisma.vendor.findFirst({
+                    where: {
+                        email
+                    }
+                })
+    
+                return vendor?.id   
+            } catch (err) {
+                console.log(err)
+            }
+        },
         async getVendorProfile(_: any, args: any, { prisma }: any) {
             try {
-                const { vendorId } = args;
+                const { id } = args;
     
                 const vendor = await prisma.vendor.findUnique({
                     where: {
-                        id: vendorId
+                        id,
                     }
                 })
     

@@ -17,7 +17,8 @@ export const VendorTypeDef = `
     }
 
     type Query {
-        getVendorProfile(vendorId: String!): Vendor
+        getVendorProfile(id: String!): Vendor
+        getVendorIdByEmail(email: String!): String
     }
 
     type Mutation {
