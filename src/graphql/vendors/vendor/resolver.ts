@@ -25,21 +25,12 @@ export const VendorResolver = {
 
             const calculateRevenue = async (orders: OrderItem[]) => {
                 const revenuePromises = orders.map(async (order: OrderItem) => {
-                  const product = await prisma.product.findUnique({
-                    where: { id: order.productId }
-                  });
-              
-                  if (product) {
-                    return order.quantity * order.amount;
-                  }
-              
-                  return 0; // In case the product is not found
+                    return order.amount;
                 });
                 // Resolve all the promises and sum up the revenue
                 const revenueArray = await Promise.all(revenuePromises);
                 const totalRevenue = revenueArray.reduce((acc: number, revenue: number) => acc + revenue, 0);
               
-                console.log(totalRevenue);
                 return totalRevenue;
               };
 

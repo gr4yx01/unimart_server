@@ -105,5 +105,7 @@ model OrderItem {
   productId String
   amount Int
   quantity  Int
-  status  Status  @default(PENDING)
+  confirmed_payment  Boolean  @default(false)
+  out_for_delivery   Boolean  @default(false)
+  delivered Boolean  @default(false)
 }

@@ -5,7 +5,7 @@ export const VendorOrderTypeDef = `
         status: String
         total_price: Int
         created_at: String
-        payment_status: String
+        payment_status: Boolean
         payment_reference: String
     }
 
@@ -13,11 +13,22 @@ export const VendorOrderTypeDef = `
         quantity: Int
         product: Product
         order: Order
+        status: Status
+        amount: Int
+        confirmed_payment: Boolean
+        out_for_delivery: Boolean
+        delivered: Boolean
     }
 
     input Items {
         product_id: ID!
         quantity: Int!
+    }
+
+    enum Status {
+        PENDING
+        DELIVERED
+        CANCELLED
     }
 
     type NumberOfOrders {
@@ -30,7 +41,7 @@ export const VendorOrderTypeDef = `
         userId: String!
         status: String!
         total_price: Int!
-        payment_status: String!
+        payment_status: Boolean!
         payment_reference: String!
     }
 
@@ -39,6 +50,6 @@ export const VendorOrderTypeDef = `
     }
         
     type Mutation {
-        updateOrderStatus(id: String!, status: String!): Order
-    }
+        updateOrderStatus(id: String!, confirmed_payment: Boolean!, out_for_delivery: Boolean!, delivered: Boolean!): OrderItem
+    }  
 `;

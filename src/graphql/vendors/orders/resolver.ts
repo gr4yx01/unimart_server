@@ -24,29 +24,33 @@
         },
         Mutation: {
             async updateOrderStatus(_: any, args: any, { prisma }: any) {
-                const { id, status } = args;
+                const { id, confirmed_payment, out_for_delivery, delivered } = args;
 
-                const orderExist = await prisma.order.findUnique({
+                const orderItemExist = await prisma.orderItem.findUnique({
                     where: {
                         id,
                     }
                 })
 
-                if(!orderExist) {
+                console.log(orderItemExist)
+
+                if(!orderItemExist) {
                     throw new Error('Order does not exist')
                 }
 
-                const order = await prisma.order.update({
+                const orderItem = await prisma.orderItem.update({
                     where: {
-                        id: orderExist.id
+                        id: orderItemExist.id
                     },
                     data: {
-                        ...orderExist,
-                        status
+                        // ...orderItemExist,
+                        confirmed_payment,
+                        out_for_delivery,
+                        delivered
                     }
                 })
 
-                return order;
+                return orderItem;
             }
         }
     };
