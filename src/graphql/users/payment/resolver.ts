@@ -1,11 +1,19 @@
-import { createSubaccount, initializePayment, verifyPayment } from "../../../payment-service";
+import { createSubaccount, initializePayment, initializePaymentForMultipleSubaccounts, verifyPayment } from "../../../payment-service";
 
 export const PaymentResolver = {
   Mutation: {
     createPaymentSession: async (_: any, args: any) => {
-      const { email, amount, subaccount_code } = args;
-      const result = await initializePayment(email, amount, subaccount_code);
-      return result;
+      const { email, amount, subaccount_code, subaccounts } = args;
+    
+      if (Array.isArray(subaccounts)) {
+        // Multiple subaccounts
+        const result = await initializePaymentForMultipleSubaccounts(subaccounts);
+        return result;
+      } else {
+        // Single subaccount
+        const result = await initializePayment(email, amount, subaccount_code);
+        return result;
+      }
     },
 
     verifyPayment: async (_: any, { reference }: any) => {

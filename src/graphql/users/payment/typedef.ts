@@ -36,12 +36,18 @@ export const PaymentTypeDef = `
         percentage_charge: Float
     }
 
+    input Subaccount {
+        email: String
+        amount: Int
+        subaccount_code: String
+    }
+
     type SubaccountResponse {
         subaccount_code: String
     }
 
     type Mutation {
-        createPaymentSession(email: String!, amount: Int!, subaccount_code: String!): PaymentInitialization
+        createPaymentSession(email: String, amount: Int, subaccount_code: String, subaccounts: [Subaccount]): PaymentInitialization
         verifyPayment(reference: String!): PaymentVerification
         createSubaccount(business_name: String!, account_number: String!, bank_code: String!, percentage_charge: Float!): SubaccountResponse
     }

@@ -13,12 +13,31 @@ const instance = axios.create({
   },
 });
 
-const initializePayment = async (email: string, amount: string, subaccount_code: string) => {
+
+const initializePaymentForMultipleSubaccounts = async (subaccounts: any) => {
+  // Calculate the total amount
+  const totalAmount = subaccounts.reduce((sum: number, subaccount: any) => sum + subaccount?.amount, 0);
+
+  const splitDetails = subaccounts.map((subaccount: any, index: number) => ({
+    subaccount: subaccount?.subaccount_code,
+    share: subaccount?.amount
+  }));
+
+  // Initialize payment for the aggregated transaction
+  const result = await initializePayment(subaccounts[0].email, totalAmount, splitDetails);
+  return result;
+};
+
+const initializePayment = async (email: string, amount: string, splitDetails: any) => {
   try {
     const response = await instance.post('/transaction/initialize', JSON.stringify({
       email,
       amount,
-      subaccount_code,
+      split: {
+        "type": "flat",
+        "bearer_type": "subaccount",
+        "subaccounts": splitDetails
+      },
       bearer: "subaccount"
     }));
     return response.data;
@@ -99,5 +118,6 @@ export {
   createPlan,
   createCustomer,
   subscribeCustomer,
-  unsubscribeCustomer
+  unsubscribeCustomer,
+  initializePaymentForMultipleSubaccounts
 };

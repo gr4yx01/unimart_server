@@ -20,6 +20,25 @@
                 })
 
                 return orders;
+            },
+            async getOrderItemDetail(_: any, args: any, { prisma }: any) { 
+                const { id } = args;
+
+                const orderItem = await prisma.orderItem.findUnique({
+                    where: {
+                        id
+                    },
+                    include: {
+                        product: true,
+                        order: {
+                            include: {
+                                user: true
+                            }
+                        }
+                    }
+                })
+
+                return orderItem;
             }
         },
         Mutation: {
@@ -43,7 +62,7 @@
                         id: orderItemExist.id
                     },
                     data: {
-                        // ...orderItemExist,
+                        ...orderItemExist,
                         confirmed_payment,
                         out_for_delivery,
                         delivered

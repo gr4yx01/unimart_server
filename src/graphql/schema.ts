@@ -18,10 +18,11 @@ import { UniversityResolver } from "./university/resolver";
 import { UserResolver } from "./users/user/resolver";
 import { VendorOrderResolver } from "./vendors/orders/resolver";
 import { VendorSubscriptionResolver } from "./vendors/payment/resolver";
+import { userProductResolver } from "./users/product/resolver";
+import { userProductTypeDef } from "./users/product/typedef";
 
+const typeDefs = mergeTypeDefs([UniversityTypeDef, ProductTypeDef, UserTypeDef, OrderTypeDef, VendorTypeDef, OrderItemTypeDef, PaymentTypeDef, VendorOrderTypeDef, VendorSubscriptionTypeDef, userProductTypeDef]);
 
-const typeDefs = mergeTypeDefs([UniversityTypeDef, ProductTypeDef, UserTypeDef, OrderTypeDef, VendorTypeDef, OrderItemTypeDef, PaymentTypeDef, VendorOrderTypeDef, VendorSubscriptionTypeDef]);
-
-const resolvers = mergeResolvers([UniversityResolver, ProductResolver, UserResolver, OrderResolver, VendorResolver, OrderItemResolver, PaymentResolver, VendorOrderResolver, VendorSubscriptionResolver]);
+const resolvers = mergeResolvers([UniversityResolver, ProductResolver, UserResolver, OrderResolver, VendorResolver, OrderItemResolver, PaymentResolver, VendorOrderResolver, VendorSubscriptionResolver, userProductResolver]);
 
 export const schema = makeExecutableSchema({ typeDefs, resolvers });

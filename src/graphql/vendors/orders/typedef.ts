@@ -47,6 +47,7 @@ export const VendorOrderTypeDef = `
 
     type Query {
         vendorOrders(vendorId: String!): [OrderItem]
+        getOrderItemDetail(id: String!): OrderItem
     }
         
     type Mutation {
