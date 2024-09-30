@@ -44,13 +44,12 @@ const startServer = async () => {
         const transactionReference = req.params.reference;
       
         try {
-          const { status, data } = await verifyPayment(transactionReference);
+          const { data } = await verifyPayment(transactionReference);
             
-          console.log(data)
-          if (status === 'success') {
+          if (data?.status === 'success') {
             res.json({
               success: true,
-              paymentStatus: data.data.status, // 'success' or 'failed'
+              paymentStatus: data.status, // 'success' or 'failed'
               reference: transactionReference
             });
           } else {
