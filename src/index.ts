@@ -40,31 +40,32 @@ const startServer = async () => {
         }),
     );
 
-    app.get('/paystack-callback', async (req, res) => {
-        const transactionReference = req.query.reference;
+    app.get('/verify-payment/:reference', async (req, res) => {
+        const transactionReference = req.params.reference;
       
         try {
           const { status, data } = await verifyPayment(transactionReference);
-      
-          if (status === 200 && data.data.status === 'success') {
-            // Redirect to your app using the deep link with transaction details
-            res.redirect(`unimart://payment-success?reference=${transactionReference}`);
+            
+          console.log(data)
+          if (status === 'success') {
+            res.json({
+              success: true,
+              paymentStatus: data.data.status, // 'success' or 'failed'
+              reference: transactionReference
+            });
           } else {
-            // Handle failed payment or verification issue
-            res.send('Payment verification failed');
+            res.json({
+              success: false,
+              message: 'Failed to verify payment'
+            });
           }
-        } catch (error) {
-          res.status(500).send('Error verifying transaction');
+        } catch (error: any) {
+          res.status(500).json({
+            success: false,
+            message: 'Error verifying transaction',
+            error: error.message
+          });
         }
-      });
-
-    app.get('/paystack-callback', (req, res) => {
-        const transactionReference = req.query.reference;
-        
-        // Perform any payment verification with Paystack if needed here
-        
-        // Now redirect to your mobile app's deep link with the reference
-        res.redirect(`unimart://payment-success?reference=${transactionReference}`);
       });
 
     app.post('/webhook', handleWebhook);
