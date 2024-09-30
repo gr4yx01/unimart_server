@@ -16,29 +16,32 @@ const instance = axios.create({
 
 const initializePaymentForMultipleSubaccounts = async (subaccounts: any) => {
   // Calculate the total amount
-  const totalAmount = subaccounts.reduce((sum: number, subaccount: any) => sum + subaccount?.amount, 0);
+  const amount = subaccounts.reduce((sum: number, subaccount: any) => sum + subaccount?.amount, 0);
 
-  const splitDetails = subaccounts.map((subaccount: any, index: number) => ({
+  const totalAmount =((amount * 0.05) + amount) * 100
+
+  const splitDetails = subaccounts.map((subaccount: any) => ({
     subaccount: subaccount?.subaccount_code,
-    share: subaccount?.amount
+    share: subaccount?.amount * 100
   }));
 
   // Initialize payment for the aggregated transaction
-  const result = await initializePayment(subaccounts[0].email, totalAmount, splitDetails);
+  const result = await initializePayment(subaccounts[0].email, String(totalAmount), splitDetails);
   return result;
 };
 
 const initializePayment = async (email: string, amount: string, splitDetails: any) => {
+  console.log(amount)
+  console.log(splitDetails)
   try {
     const response = await instance.post('/transaction/initialize', JSON.stringify({
       email,
       amount,
       split: {
         "type": "flat",
-        "bearer_type": "subaccount",
+        "bearer_type": "all",
         "subaccounts": splitDetails
       },
-      bearer: "subaccount"
     }));
     return response.data;
   } catch (error: any) {
