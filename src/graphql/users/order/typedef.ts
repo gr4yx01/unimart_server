@@ -4,7 +4,7 @@ export const OrderTypeDef = `
         user: User
         status: String
         total_price: Int
-        created_at: String
+        createdAt: String
         payment_status: Boolean
         payment_reference: String
     }
