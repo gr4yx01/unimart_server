@@ -10,7 +10,11 @@ export const OrderResolver = {
                 include: {
                     items: {
                         include: {
-                            product: true
+                            product: {
+                                include: {
+                                    vendor: true
+                                }
+                            }
                         }
                     }
                 }

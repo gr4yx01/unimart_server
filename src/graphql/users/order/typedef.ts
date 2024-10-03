@@ -1,5 +1,6 @@
 export const OrderTypeDef = `
     type Order {
+        id: String
         items: [OrderItem]
         user: User
         status: String

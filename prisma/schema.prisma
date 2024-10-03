@@ -60,6 +60,8 @@ model Vendor {
   verified        Boolean?
   phone_no        String?
   rating          Int?
+  noOfRating      Int?        @default(0)
+  totalRate       Int?        @default(0)
   subaccount_code String?
   account_number  String
   bank_code       String
@@ -74,6 +76,8 @@ model Product {
   description String
   price       Float
   rating      Int
+  noOfRating  Int?        @default(0)
+  totalRate   Int?        @default(0)
   thumbnail   String
   stock       Int
   category    Category

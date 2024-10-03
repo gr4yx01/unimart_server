@@ -18,5 +18,7 @@ export const OrderItemTypeDef = `
 
     type Mutation {
         createOrderItem(input: OrderItemInput): OrderItem
+        rateProduct(id: String!, rating: Int!): Product
+        rateVendor(id: String!, rating: Int!): Vendor
     }
-`
+`;
