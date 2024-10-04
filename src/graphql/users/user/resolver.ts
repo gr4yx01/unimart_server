@@ -19,19 +19,23 @@ export const UserResolver = {
     Mutation: {
       createUser: async (_: any, args: any, { prisma }: any) => {
         const { name, email, department, universityId, level, phone_no } = args;
-
-        const user = await prisma.user.create({
-          data: {
-            name,
-            email,
-            department,
-            universityId,
-            level,
-            phone_no
-          }
-        });
-
-        return user;
+        
+        try {
+          const user = await prisma.user.create({
+            data: {
+              name,
+              email,
+              department,
+              universityId,
+              level,
+              phone_no
+            }
+          });
+  
+          return user;
+        } catch (err: any) {
+          throw new Error(`Failed to fetch user: ${err.message}`);
+        }
       },
       updateUser: async (_: any, args: any, { prisma }: any) => {
         const { id, ...detail } = args;
