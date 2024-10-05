@@ -18,7 +18,7 @@ export const UserResolver = {
     },
     Mutation: {
       createUser: async (_: any, args: any, { prisma }: any) => {
-        const { name, email, department, universityId, level, phone_no } = args;
+        const { name, email, department, universityId, level, phone_no, gender } = args;
         
         try {
           const user = await prisma.user.create({
@@ -28,7 +28,8 @@ export const UserResolver = {
               department,
               universityId,
               level,
-              phone_no
+              phone_no,
+              gender
             }
           });
   

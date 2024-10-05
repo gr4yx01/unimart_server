@@ -24,6 +24,15 @@ export const prisma = new PrismaClient();
 const startServer = async () => {
     const server = new ApolloServer({
         schema,
+        formatError: (error) => {
+          console.error(error);
+          return {
+            message: error.message,
+            code: error.extensions?.code ?? 'UNKNOWN_ERROR',
+            locations: error.locations,
+            path: error.path,
+          };
+        },
     });
     await server.start();
     app.use(
