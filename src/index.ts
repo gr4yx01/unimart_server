@@ -6,8 +6,6 @@ import { expressMiddleware } from '@apollo/server/express4';
 import {  PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv'
 import { v2 as cloudinary } from 'cloudinary';
-import { handleWebhook } from './webhook'
-import { verifyPayment } from './payment-service';
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME, // replace with your cloud name
@@ -49,34 +47,6 @@ const startServer = async () => {
         }),
     );
 
-    app.get('/verify-payment/:reference', async (req, res) => {
-        const transactionReference = req.params.reference;
-      
-        try {
-          const { data } = await verifyPayment(transactionReference);
-            
-          if (data?.status === 'success') {
-            res.json({
-              success: true,
-              paymentStatus: data.status, // 'success' or 'failed'
-              reference: transactionReference
-            });
-          } else {
-            res.json({
-              success: false,
-              message: 'Failed to verify payment'
-            });
-          }
-        } catch (error: any) {
-          res.status(500).json({
-            success: false,
-            message: 'Error verifying transaction',
-            error: error.message
-          });
-        }
-      });
-
-    app.post('/webhook', handleWebhook);
     app.listen('4000', () => {
         console.log("Server's up");
     })

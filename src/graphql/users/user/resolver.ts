@@ -18,18 +18,20 @@ export const UserResolver = {
     },
     Mutation: {
       createUser: async (_: any, args: any, { prisma }: any) => {
-        const { name, email, department, universityId, level, phone_no, gender } = args;
-        
+        const { name, department, universityId, level, phone_no, gender, wallet_address } = args;
+
+        console.log(wallet_address)
+
         try {
           const user = await prisma.user.create({
             data: {
               name,
-              email,
               department,
               universityId,
               level,
               phone_no,
-              gender
+              gender,
+              wallet_address
             }
           });
   

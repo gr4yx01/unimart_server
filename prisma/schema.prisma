@@ -48,10 +48,10 @@ enum Gender {
 model User {
   id           String     @id @default(cuid())
   name         String
-  email        String     @unique
   department   String?
   university   University @relation(fields: [universityId], references: [id])
   gender       Gender     @default(MALE)
+  wallet_address String?
   level        String?
   universityId String
   phone_no     String?
@@ -61,19 +61,14 @@ model User {
 model Vendor {
   id              String      @id @default(cuid())
   name            String
-  email           String      @unique
   image           String
   verified        Boolean?
   phone_no        String?
   rating          Int?
   noOfRating      Int?        @default(0)
   totalRate       Int?        @default(0)
-  subaccount_code String?
-  account_number  String
-  bank_code       String
+  wallet_address String?
   products        Product[]
-  subscriptionStatus    Subscription @default(INACTIVE)
-  subscriptionCode String? @unique
 }
 
 model Product {
@@ -104,7 +99,7 @@ model Order {
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
   payment_status    Boolean?
-  payment_reference String
+  hash  String
 }
 
 model OrderItem {

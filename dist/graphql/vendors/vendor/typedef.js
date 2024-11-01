@@ -1,4 +1,7 @@
-export const VendorTypeDef = `
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.VendorTypeDef = void 0;
+exports.VendorTypeDef = `
     type Vendor {
         id: String
         name: String

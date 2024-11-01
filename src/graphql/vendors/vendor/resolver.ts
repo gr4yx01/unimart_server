@@ -27,7 +27,7 @@ export const VendorResolver = {
                 const revenuePromises = orders.map(async (order: OrderItem) => {
                     return order.amount;
                 });
-                // Resolve all the promises and sum up the revenue
+                
                 const revenueArray = await Promise.all(revenuePromises);
                 const totalRevenue = revenueArray.reduce((acc: number, revenue: number) => acc + revenue, 0);
               

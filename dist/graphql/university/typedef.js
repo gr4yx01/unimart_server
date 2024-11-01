@@ -7,6 +7,10 @@ exports.UniversityTypeDef = `
         name: String
     }
 
+    type Query {
+        universities: [University]
+    }
+
     type Mutation {
         createUniversity(name: String!): University
     }

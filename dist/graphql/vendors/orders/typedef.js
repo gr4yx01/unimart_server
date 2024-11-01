@@ -1,4 +1,7 @@
-export const VendorOrderTypeDef = `
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.VendorOrderTypeDef = void 0;
+exports.VendorOrderTypeDef = `
     type Order {
         items: [OrderItem]
         user: User

@@ -1,4 +1,7 @@
-export const OrderTypeDef = `
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.OrderTypeDef = void 0;
+exports.OrderTypeDef = `
     type Order {
         id: String
         items: [OrderItem]
